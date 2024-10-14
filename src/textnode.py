@@ -1,4 +1,15 @@
 from leafnode import LeafNode
+from enum import Enum
+
+class TextType(Enum):
+    TEXT = "text"
+    BOLD = "bold"
+    ITALIC = "italic"
+    CODE = "code"
+    LINK = "link"
+    IMAGE = "image"
+
+
 class TextNode:
     def __init__(self, text, text_type, url=None):
         self.text = text
@@ -17,17 +28,17 @@ class TextNode:
     
     def text_node_to_html_node(self):
         match self.text_type:
-            case 'text':
+            case TextType.TEXT:
                 return LeafNode(None, self.text)
-            case 'bold':
+            case TextType.BOLD:
                 return LeafNode('b', self.text)
-            case 'italic':
+            case TextType.ITALIC:
                 return LeafNode('i', self.text)
-            case 'code':
+            case TextType.CODE:
                 return LeafNode('code', self.text)
-            case 'link':
+            case TextType.LINK:
                 return LeafNode('a', self.text, {'href': self.url})
-            case 'image':
+            case TextType.IMAGE:
                 return LeafNode('img', '', {'src': self.url, 'alt': self.text})
             case _:
                 raise ValueError('Text type is not supported')

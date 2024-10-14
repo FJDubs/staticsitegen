@@ -10,6 +10,8 @@ class TestExtractMarkdown(unittest.TestCase):
     textml = "This text includes [Google](https://www.google.com) and [GitHub](https://github.com) links."
     textnl = "This sentence has no links at all."
 
+    textimagelink = "![alt text](http://example.com/image.png) Here is a [link to Boot.dev](https://www.boot.dev) for you."
+
     def test_img_output(self):
         expected = [('alt text', 'http://example.com/image.png')]
         self.assertEqual(extract_markdown_images(self.textimg), expected)
@@ -33,6 +35,10 @@ class TestExtractMarkdown(unittest.TestCase):
     def test_no_link(self):
         expected = []
         self.assertEqual(extract_markdown_links(self.textnl), expected)
+    def test_both_text(self):
+        expected = [[('alt text', 'http://example.com/image.png')], [('link to Boot.dev', 'https://www.boot.dev')]]
+        lista = [extract_markdown_images(self.textimagelink), extract_markdown_links(self.textimagelink)]
+        self.assertEqual(lista, expected)
 
 if __name__ == "__main__":
     unittest.main()

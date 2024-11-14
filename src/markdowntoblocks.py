@@ -11,9 +11,3 @@ def markdown_to_blocks(markdown):
                 blocks.append('\n'.join(sub_block).strip())
             sub_block = []
     return blocks
-
-def main():
-    markdown = "First block.\n\n\n\nSecond block."
-    print(markdown_to_blocks(markdown))
-
-main()

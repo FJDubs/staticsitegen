@@ -16,4 +16,4 @@ class HTMLNode:
         return prop_line
     
     def __repr__(self) -> str:
-        return f'{self.tag}, {self.value}, {self.children}, {self.props}'
+        return f'[{self.tag}, {self.value}, {self.children}, {self.props}]'

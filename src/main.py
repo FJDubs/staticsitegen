@@ -5,10 +5,12 @@ from parentnode import ParentNode
 from extractmarkdown import extract_markdown_images, extract_markdown_links
 from splitnodes import split_nodes_image, split_nodes_link
 from texttotextnode import text_to_textnode
+from markdowntohtmlnode import markdown_to_html_node
+from copydirtopublic import copy_dir_to_public
 
 def main():
-    text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
-    textnode_list = text_to_textnode(text)
-    print(textnode_list)
-
+    try:
+        copy_dir_to_public('static')
+    except ValueError as e:
+        print('Error:', e)
 main()

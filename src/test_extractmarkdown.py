@@ -1,5 +1,5 @@
 import unittest
-from extractmarkdown import extract_markdown_images, extract_markdown_links
+from extractmarkdown import extract_markdown_images, extract_markdown_links, extract_title
 
 class TestExtractMarkdown(unittest.TestCase):
     textimg = "![alt text](http://example.com/image.png)"
@@ -35,10 +35,27 @@ class TestExtractMarkdown(unittest.TestCase):
     def test_no_link(self):
         expected = []
         self.assertEqual(extract_markdown_links(self.textnl), expected)
+
     def test_both_text(self):
         expected = [[('alt text', 'http://example.com/image.png')], [('link to Boot.dev', 'https://www.boot.dev')]]
         lista = [extract_markdown_images(self.textimagelink), extract_markdown_links(self.textimagelink)]
         self.assertEqual(lista, expected)
+
+    def test_title_no_h1(self):
+        with self.assertRaisesRegex(ValueError, r'No title found\. Please provide a H1 heading \("\# "\)\.'):
+            extract_title('No h1 tag here')
+    
+    def test_title_works(self):
+        expected = 'My Title'
+        self.assertEqual(extract_title('# My Title'), expected)
+    
+    def test_title_h2(self):
+        with self.assertRaisesRegex(ValueError, r'No title found\. Please provide a H1 heading \("\# "\)\.'):
+            extract_title('## No h1 tag here')
+
+    def test_title_empty(self):
+        with self.assertRaisesRegex(ValueError, r'No title found\. Please provide a H1 heading \("\# "\)\.'):
+            extract_title('')
 
 if __name__ == "__main__":
     unittest.main()

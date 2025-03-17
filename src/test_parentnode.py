@@ -43,3 +43,6 @@ class TestParentNode(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'ParentNode must have a tag'):
             self.node3.to_html()
     
+
+if __name__ == "__main__":
+    unittest.main()

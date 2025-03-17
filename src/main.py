@@ -8,6 +8,9 @@ from generatepage import generate_pages_recursive
 basepath = "/"
 if len(sys.argv) > 1:
     basepath = sys.argv[1]
+
+print(f"sys.argv: {sys.argv}")
+print(f"basepath: {basepath}")
 dir_path_static = "./static"
 dir_path_public = "./docs"
 dir_path_content = "./content"

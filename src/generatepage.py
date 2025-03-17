@@ -16,6 +16,7 @@ def generate_page(dir_path_content, template_path, dest_dir_path, basepath):
     title_string = extract_title(from_content)
     html_page = re.sub(r"{{[\s]*Title[\s]*}}", title_string, template_content)
     html_page = re.sub(r"{{[\s]*Content[\s]*}}", content_string, html_page)
+    print(f"Replacing URLs with basepath: {basepath}")
     html_page = re.sub(r'href="/', f'href="{basepath}', html_page)
     html_page = re.sub(r'src="/', f'src="{basepath}', html_page)
     with open(dest_dir_path, 'w') as f:

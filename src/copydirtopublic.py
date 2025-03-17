@@ -1,24 +1,15 @@
-from os import path, listdir, mkdir
-from shutil import copy, rmtree
+import os
+import shutil
 
-def copy_dir_to_public(dir):
-    if not path.exists(dir):
-        raise ValueError(f'{dir} directory does not exist.\nPlease include and update {dir} directory')
-    if path.exists('public'):
-        rmtree('public')
-    mkdir('public')
-    get_files(dir, "public")
-    
-def get_files(dir, dest):
-    dir_list = listdir(dir)
-    for item in dir_list:
-        item_path = path.join(dir, item)
-        dest_path = path.join(dest, item)
-        print(f'Looking at: {item_path}')
-        if not item[0] == '.' and path.isdir(item_path):
-            mkdir(dest_path)
-            print(f'Entering: {item_path}')
-            get_files(item_path, dest_path)
-        elif not item[0] == '.' and path.isfile(item_path):
-            print(f'Copying: {item_path}')
-            copy(item_path, dest)
+def copy_files_recursive(source_dir_path, dest_dir_path):
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
+
+    for filename in os.listdir(source_dir_path):
+        from_path = os.path.join(source_dir_path, filename)
+        dest_path = os.path.join(dest_dir_path, filename)
+        print(f" * {from_path} -> {dest_path}")
+        if os.path.isfile(from_path):
+            shutil.copy(from_path, dest_path)
+        else:
+            copy_files_recursive(from_path, dest_path)

@@ -1,19 +1,29 @@
-from textnode import TextNode
-from htmlnode import HTMLNode
-from leafnode import LeafNode
-from parentnode import ParentNode
-from extractmarkdown import extract_markdown_images, extract_markdown_links
-from splitnodes import split_nodes_image, split_nodes_link
-from texttotextnode import text_to_textnode
-from markdowntohtmlnode import markdown_to_html_node
-from copydirtopublic import copy_dir_to_public
-from generatepage import genenerate_page
+import os
+import shutil
+
+from copydirtopublic import copy_files_recursive
+from generatepage import generate_pages_recursive
+
+dir_path_static = "./static"
+dir_path_public = "./public"
+dir_path_content = "./content"
+template_path = "./template.html"
 
 
 def main():
-    try:
-        copy_dir_to_public('static')
-    except ValueError as e:
-        print('Error:', e)
-    genenerate_page('content/index.md', 'template.html', 'public/index.html')
+    print("Deleting public directory...")
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
+
+    print("Copying static files to public directory...")
+    copy_files_recursive(dir_path_static, dir_path_public)
+
+    print("Generating page...")
+    generate_pages_recursive(
+        dir_path_content,
+        template_path,
+        dir_path_public
+    )
+
+
 main()

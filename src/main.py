@@ -6,8 +6,8 @@ from copydirtopublic import copy_files_recursive
 from generatepage import generate_pages_recursive
 
 basepath = "/"
-if sys.argv != "":
-    basepath = sys.argv
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
 dir_path_static = "./static"
 dir_path_public = "./docs"
 dir_path_content = "./content"
